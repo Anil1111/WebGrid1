@@ -1,0 +1,35 @@
+﻿@{
+    List<Person> People = Data.GetData();
+    WebGrid grid = new WebGrid(People, rowsPerPage: 5);
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>WebGrid Example</title>
+        <link href="@Href("~/StyleSheet.css")" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <h1>WebGrid Example</h1>
+        @grid.GetHtml(
+            columns: grid.Columns(
+                grid.Column("ID", style: "grey"),
+                grid.Column("Forename"),
+                grid.Column("Surname"),
+                grid.Column("Gender"),
+                grid.Column("DOB", "Date Of Birth", @<text>@item.DOB.ToString("dd-MMMM-yyyy")</text>)
+            ), 
+            caption: "People Table (total: " + @grid.TotalRowCount + ")",
+            alternatingRowStyle: "altRow", 
+            footerStyle: "footer",
+            mode: WebGridPagerModes.All,
+            firstText: "First", 
+            previousText: "Previous", 
+            nextText: "Next", 
+            lastText: "Last"
+        )
+
+    </body>
+</html>
